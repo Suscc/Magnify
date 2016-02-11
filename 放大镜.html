@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            margin: 50px;
+        }
+        
+        #preview{
+            height: 300px;
+            width: 530px;
+            border: 1px solid #c9c9c9;
+            padding: 5px;
+            position: relative;
+        }
+        
+        #preview img {
+            height: 300px;
+/*            padding: 5px;*/
+            width: 530px;
+        }
+        
+        #preview #zhezhao {
+            width: 100px;
+            height: 100px;
+            background: rgba(245, 245, 245, 0.57);
+            position: absolute;
+            top: 0;
+            left: 0;
+            display: none;
+        }
+        
+        #big {
+            width: 300px;
+            height: 300px;
+            overflow: hidden;
+            position: absolute;
+            display: none;
+            top: 0px;
+            left: 550px;
+        }
+        
+        #big img {
+            width: 1000px;
+            height: 562px;
+            position: relative;
+        }
+        
+        #control {
+            width: 540px;
+            height: 60px;
+            border: 1px solid #e07938;
+            margin-top: 3px;
+            overflow: hidden;
+            z-index: 20;
+        }
+        
+        #control span {
+            height: 60px;
+            background: #c6c6c6;
+            display: block;
+            width: 20px;
+            text-align: center;
+            line-height: 60px;
+            cursor: pointer;
+            z-index: 10;
+            position: relative
+        }
+        
+        #control #thumbnail {
+            width: 500px;
+            height: 60px;
+/*            background: #f0a742;*/
+            float: left;
+            position: relative;
+            z-index: 2s;
+        }
+        
+        #control #thumbnail ul {
+            list-style: none;
+            position: absolute;
+            height: 60px;
+            z-index: 1;
+        }
+        
+        #control #thumbnail ul li {
+            float: left;
+            width: 125px;
+            height: 60px;
+            text-align: center;
+            line-height: 60px;
+/*            z-index: 1;*/
+        }
+        
+        #control #thumbnail ul li img {
+            width: 115px;
+            height: 50px;
+            display: block;
+            margin: 5px;
+            cursor: pointer;
+            z-index: 1;
+        }
+        
+        #control #thumbnail ul li img.cur {
+            border: 1px solid #3aa8d9;
+        }
+        
+        #control span.cur {
+            background: #4d4d4d;
+            color: #fff;
+        }
+        
+        
+    </style>
+    <script src="Jquery.js"></script>
+    <script>
+        $(function () {
+            var oPreview = $('#preview img');
+            var oBtleft = $('#btn-left');
+            var oBtright = $('#btn-right');
+            var oUl = $('#thumbnail ul');
+            var aLi = oUl.children('li');
+            var Liwid = aLi.eq(0).width();
+            var aImg = aLi.children('img');
+            var now = 0;
+            var zhezhao = $('#preview #zhezhao');
+            var offset = $('#preview').offset();
+            var norLeft = offset.left;
+            var norRight = offset.top;
+            var x = zhezhao.width() / 2;
+            var y = zhezhao.height() / 2;
+            var big = $('#big');
+            var bigm = big.children('img');
+            
+            yy();
+            
+//            alert(aLi.size());
+            oUl.css('width', aLi.size() * Liwid);
+            
+            oBtleft.click(function () {
+                /*now--;
+                
+                if (now == 0) {
+                    $(this).addClass('cur');
+                } else if (now == -1) {
+                    now = 0;
+                } else {
+                    $(this).siblings().removeClass('cur');
+                };
+                
+                oUl.css('left', -Liwid * now);
+                alert(now);*/
+                /*if (now == 1) {
+                    now = 0;
+                    $(this).addClass('cur');
+                } else if (now == 0) {
+                    now = 0;
+                } else {
+                    now--;
+                    $(this).siblings().removeClass('cur');
+                };
+                
+                oUl.css('left', -Liwid * now);
+                
+                alert(now);*/
+                /*now--;
+                if (now == 0) {
+                    $(this).addClass('cur');
+                } else if (now == -1) {
+                    now = 0;
+                } else {
+                    $(this).siblings().removeClass('cur');
+                };
+                
+                oUl.css('left', -Liwid * now);
+                alert(now);*/
+                now--;
+                yy();
+            });
+            
+            oBtright.click(function (e) {
+                /*now++;
+                
+                if (now == 2) {
+                    $(this).addClass('cur');
+                } else if (now == 3) {
+                    now = 2;
+                } else {
+                    $(this).siblings().removeClass('cur');
+                };
+                
+                oUl.css('left', -Liwid * now);
+                alert(now);*/
+                /*if (now == 1) {
+                    now = 2;
+                    $(this).addClass('cur');
+                } else if (now == 2) {
+                    now = 2;
+                } else {
+                    now++;
+                    $(this).siblings().removeClass('cur');
+                };
+                
+                oUl.css('left', -Liwid * now);
+                
+                alert(now);*/
+                /*now++;
+                if (now == 2) {
+                    $(this).addClass('cur');
+                } else if (now == 3) {
+                    now = 2;
+                } else {
+                    $(this).siblings().removeClass('cur');            
+                };
+                oUl.css('left', -Liwid * now);
+                alert(now);*/
+                e.preventDefault();
+                now++;
+                yy();
+            });
+            
+            aImg.mouseover(function() {
+                oPreview.prop('src', $(this).prop('src'));
+                bigm.prop('src', $(this).prop('src'));
+//                aImg.removeClass('cur');
+                aImg.each(function (i,o) {
+                    aImg.eq(i).removeClass('cur');
+                });
+                $(this).addClass('cur');
+            });
+            
+            oPreview.mousedown(function (e) {
+                var oWId = oPreview.parent().outerWidth() - zhezhao.width();
+                var oHIg = oPreview.parent().outerHeight() - zhezhao.height();
+                zhezhao.show();
+                big.show();
+                
+                $(document).mousemove(function (e) {
+                    zhezhao.css({
+                        'left': e.pageX - norLeft - x,
+                        'top': e.pageY - norRight - y
+                    });
+                    
+                    var curLeft = parseInt(zhezhao.css('left'));
+                    var curTop = parseInt(zhezhao.css('top'));
+                    
+                    if (curLeft <= 0) {
+                        zhezhao.css('left', 0);
+                        curLeft = 0;
+                    } else if (curLeft >= oWId) {
+                        zhezhao.css('left', oWId);
+                        curLeft = oWId;
+                    };
+                    
+                    if (curTop <= 0) {
+                        zhezhao.css('top', 0);
+                        curTop = 0;
+                    } else if (curTop >= oHIg) {
+                        zhezhao.css('top', oHIg);
+                        curTop = oHIg;
+                    };
+                    
+                    var biliX = curLeft / oWId;
+                    var biliY = curTop / oHIg;
+//                    document.title = biliX + ',' + biliY;
+                    
+                    bigm.css({
+                        'left': -biliX * (bigm.width() - big.width()),
+                        'top': -biliY * (bigm.height() - big.height())
+                    });
+                });
+                
+//                e.stopPropagation();
+                $(document).mouseup(function (e) {
+                $(this).off();
+                $(document).off();
+                zhezhao.hide();
+                big.hide();
+                e.stopPropagation();
+            });
+            });
+            
+            function yy() {
+                if (now == aLi.size() - 4) {
+                    oBtright.addClass('cur');
+                } else if (now == aLi.size() - 4 + 1) {
+                    now = 2;
+                } else if (now == 0) {
+                    oBtleft.addClass('cur');
+                } else if (now == -1) {
+                    now = 0;
+                } else {
+                    oBtleft.add(oBtright).removeClass('cur');
+                };
+                
+                oUl.css('left', -Liwid * now);
+//                alert(now);
+            };
+        });
+    </script>
+</head>
+<body>
+    <div id="preview"><img src="img/1.jpg" alt=""><div id="zhezhao"></div><div id="big"><img src="img/1.jpg" alt=""></div></div>
+<!--    <div id="big"><img src="E:\Videos\Pictures\20151002_154729.jpg" alt=""></div>-->
+    <div id="control">
+        <span id="btn-left" style="float:left;">&larr;</span>
+        <div id="thumbnail">
+            <ul>
+                <li><img class="cur" src="img/3.jpg" alt=""></li>
+                <li><img src="img/1.jpg" alt=""></li>
+                <li><img src="img/2.jpg" alt=""></li>
+                <li><img src="img/5.jpg" alt=""></li>
+                <li><img src="img/6.jpg" alt=""></li>
+                <li><img src="img/4.jpg" alt=""></li>
+            </ul>
+        </div>
+        <span id="btn-right" style="float:right;">&rarr;</span>
+    </div>
+</body>
+</html>
